@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakaria Zemmouri | Développeur Web & Créateur de Sites</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f6ff',
+                            100: '#e0edff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            accent: '#8b5cf6',
+                            emerald: '#10b981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glow-effect {
+            position: relative;
+        }
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        .glow-effect:hover::after {
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#accueil" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center font-bold text-white shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                        ZZ
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-white group-hover:text-brand-500 transition-colors">
+                        Zakaria <span class="text-brand-500">Z.</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="#accueil" class="text-gray-300 hover:text-white transition-colors">Accueil</a>
+                    <a href="#apropos" class="text-gray-300 hover:text-white transition-colors">À Propos</a>
+                    <a href="#realisations" class="text-gray-300 hover:text-white transition-colors">Mes Réalisations</a>
+                    <a href="#services" class="text-gray-300 hover:text-white transition-colors">Services</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#contact" class="relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white transition-all bg-gradient-to-r from-brand-600 to-brand-accent rounded-xl hover:shadow-lg hover:shadow-brand-500/25 hover:scale-105 duration-200">
+                        Me contacter
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-gray-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#accueil" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Accueil</a>
+            <a href="#apropos" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">À Propos</a>
+            <a href="#realisations" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Mes Réalisations</a>
+            <a href="#services" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Services</a>
+            <a href="#contact" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Contact</a>
+            <a href="#contact" class="mobile-link block text-center px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-brand-accent rounded-xl">Me contacter</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section id="accueil" class="relative min-h-[90vh] flex items-center justify-center py-20 overflow-hidden">
+            <!-- Background Decorative Lighting -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-[300px] h-[300px] bg-brand-accent/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-400 text-xs sm:text-sm font-semibold mb-8 border border-brand-500/20 shadow-inner">
+                    <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span class="text-gray-200">Disponible pour de nouveaux projets</span>
+                    <span class="bg-brand-500/20 text-brand-300 px-2 py-0.5 rounded-md text-xs font-bold">14 ans • Passionné</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-tight max-w-5xl mx-auto">
+                    Créateur de sites web <br class="hidden sm:inline">
+                    <span class="text-gradient">modernes, rapides & performants</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="mt-6 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-normal">
+                    Je suis <strong class="text-white font-semibold">Zakaria Zemmouri</strong>, développeur web passionné de 14 ans. Je transforme les idées des commerces et entreprises en expériences web d'exception.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#realisations" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-accent text-white font-semibold text-base shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2">
+                        <span>Voir mes réalisations</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-gray-200 hover:text-white font-semibold text-base hover:bg-gray-800/80 hover:border-gray-700 transition-all duration-200 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-envelope text-brand-400"></i>
+                        <span>Discuter de votre projet</span>
+                    </a>
+                </div>
+
+                <!-- Key Metrics / Highlights -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <p class="text-3xl font-bold text-white">100%</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Sur Mesure & Adapté</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <p class="text-3xl font-bold text-gradient">Ultra</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Rapide & Optimized</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <p class="text-3xl font-bold text-white">Mobile</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Responsive Design</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <p class="text-3xl font-bold text-emerald-400">7/7j</p>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">Réactivité Garantie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- À Propos Section -->
+        <section id="apropos" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Text Info Column -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-500/10 text-brand-400 text-xs font-semibold">
+                            <i class="fa-solid fa-user"></i> À PROPOS DE MOI
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                            La jeunesse alliée à la passion du <span class="text-gradient">développement moderne</span>.
+                        </h2>
+                        <p class="text-gray-300 leading-relaxed">
+                            Passionné par la programmation depuis plusieurs années, j'ai développé une solide expertise dans la création de sites internet modernes et d'interfaces interactives. À 14 ans, ma force réside dans ma capacité à adopter les dernières technologies web et tendances graphiques les plus récentes.
+                        </p>
+                        <p class="text-gray-400 leading-relaxed">
+                            Que ce soit pour un <strong>restaurant</strong>, une <strong>glacerie</strong>, une boutique ou un indépendant, je conçois des sites web vitrines clairs, attractifs et totalement optimisés pour séduire et fidéliser vos clients.
+                        </p>
+
+                        <!-- Tech Badges -->
+                        <div class="pt-4">
+                            <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Compétences & Technologies</h4>
+                            <div class="flex flex-wrap gap-2 sm:gap-3">
+                                <span class="px-3 py-1.5 rounded-lg glass-card text-xs sm:text-sm text-gray-200 flex items-center gap-2 border border-gray-800">
+                                    <i class="fa-brands fa-html5 text-orange-500"></i> HTML5 / CSS3
+                                </span>
+                                <span class="px-3 py-1.5 rounded-lg glass-card text-xs sm:text-sm text-gray-200 flex items-center gap-2 border border-gray-800">
+                                    <i class="fa-brands fa-js text-yellow-400"></i> JavaScript ES6+
+                                </span>
+                                <span class="px-3 py-1.5 rounded-lg glass-card text-xs sm:text-sm text-gray-200 flex items-center gap-2 border border-gray-800">
+                                    <i class="fa-solid fa-code text-blue-400"></i> Tailwind CSS
+                                </span>
+                                <span class="px-3 py-1.5 rounded-lg glass-card text-xs sm:text-sm text-gray-200 flex items-center gap-2 border border-gray-800">
+                                    <i class="fa-solid fa-mobile-screen text-purple-400"></i> UI/UX Responsive
+                                </span>
+                                <span class="px-3 py-1.5 rounded-lg glass-card text-xs sm:text-sm text-gray-200 flex items-center gap-2 border border-gray-800">
+                                    <i class="fa-solid fa-globe text-emerald-400"></i> Multilingue & SEO
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Card Box -->
+                    <div class="lg:col-span-5">
+                        <div class="glass-card p-8 rounded-3xl relative overflow-hidden border border-gray-800 shadow-2xl">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-500/10 rounded-full blur-2xl"></div>
+                            
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                                    ZZ
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Zakaria Zemmouri</h3>
+                                    <p class="text-sm text-brand-400 font-medium">Développeur Web Webmaster</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4 text-sm text-gray-300 divide-y divide-gray-800/60">
+                                <div class="flex justify-between items-center pt-2">
+                                    <span class="text-gray-400">Âge</span>
+                                    <span class="font-semibold text-white">14 ans</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-3">
+                                    <span class="text-gray-400">Spécialité</span>
+                                    <span class="font-semibold text-white">Sites Vitrines & Catalogues</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-3">
+                                    <span class="text-gray-400">Email</span>
+                                    <a href="mailto:zakariazem28@gmail.com" class="font-semibold text-brand-400 hover:underline">zakariazem28@gmail.com</a>
+                                </div>
+                                <div class="flex justify-between items-center pt-3">
+                                    <span class="text-gray-400">Téléphone</span>
+                                    <a href="tel:0745069038" class="font-semibold text-white hover:text-brand-400 transition-colors">07 45 06 90 38</a>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 pt-4 border-t border-gray-800">
+                                <a href="tel:0745069038" class="w-full py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-center text-sm font-semibold flex items-center justify-center gap-2 transition-colors">
+                                    <i class="fa-solid fa-phone text-emerald-400"></i> Appeler directement
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Mes Réalisations Section -->
+        <section id="realisations" class="py-20 bg-gray-950/50 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Section Title -->
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-500/10 text-brand-400 text-xs font-semibold mb-3">
+                        <i class="fa-solid fa-laptop-code"></i> PORTFOLIO
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                        Mes Dernières <span class="text-gradient">Réalisations</span>
+                    </h2>
+                    <p class="mt-4 text-gray-400 text-base sm:text-lg">
+                        Découvrez une sélection de sites internet conçus avec soin pour répondre aux besoins spécifiques de chaque client.
+                    </p>
+                </div>
+
+                <!-- Portfolio Filters -->
+                <div class="flex justify-center gap-2 sm:gap-4 mb-10 flex-wrap">
+                    <button onclick="filterProjects('all')" class="filter-btn active px-4 py-2 rounded-xl text-sm font-semibold glass-card text-white bg-brand-600 transition-all" data-filter="all">Tous les projets</button>
+                    <button onclick="filterProjects('restauration')" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold glass-card text-gray-400 hover:text-white transition-all" data-filter="restauration">Restauration</button>
+                    <button onclick="filterProjects('vitrine')" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold glass-card text-gray-400 hover:text-white transition-all" data-filter="vitrine">Sites Vitrines</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Project 1: Chez Tonton -->
+                    <div class="project-card group glass-card rounded-3xl overflow-hidden border border-gray-800 hover:border-brand-500/40 transition-all duration-300" data-category="restauration">
+                        <div class="relative overflow-hidden aspect-video bg-gray-900">
+                            <!-- Image representation -->
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80" alt="Chez Tonton Restaurant Fast Food" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent"></div>
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <span class="bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-md">Fast-Food</span>
+                                <span class="bg-black/60 backdrop-blur-md text-gray-200 text-xs px-3 py-1 rounded-full font-medium">Mainvilliers</span>
+                            </div>
+
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <span class="text-xs font-semibold text-brand-400 tracking-wider uppercase">Site Web Restaurant & Click & Collect</span>
+                                <h3 class="text-2xl font-bold text-white mt-1">Chez Tonton</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-gray-300 leading-relaxed">
+                                Conception d'un site web fast-food moderne et gourmand avec affichage du menu interactif (sandwichs, assiettes, crousty box), système de réservation/commande et support multilingue (FR, EN, AR).
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">Menu Interactif</span>
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">Multilingue</span>
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">Google Maps</span>
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">UI/UX Dark Theme</span>
+                            </div>
+
+                            <div class="pt-4 border-t border-gray-800 flex justify-between items-center">
+                                <button onclick="openModal('tonton')" class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-2">
+                                    <span>Voir les détails</span>
+                                    <i class="fa-solid fa-expand text-xs"></i>
+                                </button>
+                                <span class="text-xs text-emerald-400 font-medium flex items-center gap-1">
+                                    <i class="fa-solid fa-circle text-[8px]"></i> En Ligne
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Signature Gelato -->
+                    <div class="project-card group glass-card rounded-3xl overflow-hidden border border-gray-800 hover:border-brand-500/40 transition-all duration-300" data-category="vitrine">
+                        <div class="relative overflow-hidden aspect-video bg-gray-900">
+                            <!-- Image representation -->
+                            <img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=80" alt="Signature Gelato Glacerie Artisanale" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent"></div>
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <span class="bg-amber-700/80 backdrop-blur-md text-amber-100 text-xs px-3 py-1 rounded-full font-bold shadow-md">Glacerie Artisanale</span>
+                                <span class="bg-black/60 backdrop-blur-md text-gray-200 text-xs px-3 py-1 rounded-full font-medium">Tétouan</span>
+                            </div>
+
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <span class="text-xs font-semibold text-amber-300 tracking-wider uppercase">Site Vitrine Haut de Gamme</span>
+                                <h3 class="text-2xl font-bold text-white mt-1">Signature Gelato</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <p class="text-sm text-gray-300 leading-relaxed">
+                                Réalisation d'une vitrine digitale élégante aux tons crème et chaleureux pour une glacerie artisanale. Présentation soignée des parfums, histoire de l'établissement et localisation GPS.
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">Design Élégant</span>
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">Catalogue Parfums</span>
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">Bilingue</span>
+                                <span class="px-2.5 py-1 rounded-md bg-gray-800 text-xs text-gray-300">Responsive Mobile</span>
+                            </div>
+
+                            <div class="pt-4 border-t border-gray-800 flex justify-between items-center">
+                                <button onclick="openModal('gelato')" class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-2">
+                                    <span>Voir les détails</span>
+                                    <i class="fa-solid fa-expand text-xs"></i>
+                                </button>
+                                <span class="text-xs text-emerald-400 font-medium flex items-center gap-1">
+                                    <i class="fa-solid fa-circle text-[8px]"></i> En Ligne
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-500/10 text-brand-400 text-xs font-semibold mb-3">
+                        <i class="fa-solid fa-gears"></i> MON EXPERTISE
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                        Des solutions web <span class="text-gradient">adaptées à vos besoins</span>
+                    </h2>
+                    <p class="mt-4 text-gray-400 text-base sm:text-lg">
+                        Je propose des prestations complètes et sur mesure pour booster la présence en ligne des commerçants et professionnels.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Service 1 -->
+                    <div class="glass-card p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-desktop"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Creation de Sites Vitrines</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Un site moderne et fluide pour présenter votre entreprise, vos horaires, vos tarifs et attirer de nouveaux clients de proximité.
+                        </p>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="glass-card p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Menus & Catalogues QR Code</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Spécialement conçu pour les restaurants, snackeries et commerces. Menus numériques rapides, interactifs et faciles à consulter sur smartphone.
+                        </p>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="glass-card p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Design Responsive 100% Mobile</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Plus de 80% des utilisateurs visitent un site via leur téléphone. Vos sites seront parfaitement adaptés sur smartphones, tablettes et ordinateurs.
+                        </p>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="glass-card p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-arrow-up-right-dots"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Refonte & Modernisation</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Vous avez déjà un site vieillissant ? Je lui redonne un coup de jeune avec un design dynamique, actuel et une rapidité de chargement optimisée.
+                        </p>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="glass-card p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Integration Google Maps & Contact</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Permettez à vos clients de vous trouver facilement avec l'intégration directe de Google Maps, boutons d'appel rapide et formulaires.
+                        </p>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="glass-card p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-pink-600 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-language"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Sites Multilingues</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Touchez une clientèle plus large avec des sites intégrants plusieurs langues (Français, Anglais, Arabe, etc.) basculables en 1 clic.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-950/60 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    
+                    <!-- Contact Infos -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-500/10 text-brand-400 text-xs font-semibold mb-3">
+                                <i class="fa-solid fa-paper-plane"></i> UN PROJET EN TÊTE ?
+                            </div>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                                Travaillons <span class="text-gradient">ensemble</span> !
+                            </h2>
+                            <p class="mt-4 text-gray-400 leading-relaxed">
+                                N'hésitez pas à me contacter pour discuter de votre projet de site internet, demander un devis ou poser une question. Je vous réponds très rapidement !
+                            </p>
+                        </div>
+
+                        <!-- Info Cards -->
+                        <div class="space-y-4">
+                            <a href="tel:0745069038" class="flex items-center gap-4 p-4 rounded-2xl glass-card border border-gray-800 hover:border-brand-500/40 transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl group-hover:bg-brand-600 group-hover:text-white transition-all">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 font-medium">Téléphone / WhatsApp</p>
+                                    <p class="text-base font-bold text-white group-hover:text-brand-400 transition-colors">07 45 06 90 38</p>
+                                </div>
+                            </a>
+
+                            <a href="mailto:zakariazem28@gmail.com" class="flex items-center gap-4 p-4 rounded-2xl glass-card border border-gray-800 hover:border-brand-500/40 transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-brand-accent/10 text-brand-accent flex items-center justify-center text-xl group-hover:bg-brand-accent group-hover:text-white transition-all">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 font-medium">Adresse Email</p>
+                                    <p class="text-base font-bold text-white group-hover:text-brand-accent transition-colors">zakariazem28@gmail.com</p>
+                                </div>
+                            </a>
+
+                            <div class="flex items-center gap-4 p-4 rounded-2xl glass-card border border-gray-800">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 font-medium">Disponibilité</p>
+                                    <p class="text-base font-bold text-white">Réponse en moins de 24h</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-card p-8 sm:p-10 rounded-3xl border border-gray-800 shadow-2xl relative">
+                            <form id="contact-form" class="space-y-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="name" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Votre Nom / Entreprise</label>
+                                        <input type="text" id="name" required placeholder="Ex: Restaurant Le Délice" class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Votre Email</label>
+                                        <input type="email" id="email" required placeholder="votre@email.com" class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="phone" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Téléphone</label>
+                                        <input type="tel" id="phone" placeholder="06 00 00 00 00" class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                                    </div>
+                                    <div>
+                                        <label for="project-type" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Type de projet</label>
+                                        <select id="project-type" class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-800 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                                            <option value="vitrine">Site Vitrine</option>
+                                            <option value="restaurant">Site Restaurant / Menu QR</option>
+                                            <option value="refonte">Refonte de site web</option>
+                                            <option value="autre">Autre demande</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="message" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Message & Détails du projet</label>
+                                    <textarea id="message" rows="4" required placeholder="Décrivez succinctement vos besoins..." class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-800 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-accent text-white font-bold text-base shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span>Envoyer le message</span>
+                                </button>
+                            </form>
+
+                            <!-- Dynamic Success Toast -->
+                            <div id="form-toast" class="hidden absolute inset-0 bg-gray-950/95 backdrop-blur-md rounded-3xl flex flex-col items-center justify-center p-8 text-center border border-emerald-500/30">
+                                <div class="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-3xl mb-4 animate-bounce">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Message envoyé avec succès !</h3>
+                                <p class="text-gray-300 text-sm max-w-md mb-6">
+                                    Merci pour votre message. Zakaria Zemmouri vous recontactera très rapidement.
+                                </p>
+                                <button onclick="closeToast()" class="px-6 py-2.5 rounded-xl bg-gray-800 text-white font-semibold text-sm hover:bg-gray-700 transition-colors">
+                                    Fermer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800/80 bg-gray-950 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-sm">
+                    ZZ
+                </div>
+                <span class="text-sm text-gray-400">© 2026 Zakaria Zemmouri. Tous droits réservés.</span>
+            </div>
+
+            <div class="flex items-center gap-6 text-sm text-gray-400">
+                <a href="#accueil" class="hover:text-white transition-colors">Accueil</a>
+                <a href="#realisations" class="hover:text-white transition-colors">Réalisations</a>
+                <a href="#services" class="hover:text-white transition-colors">Services</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <!-- Back to top button -->
+            <a href="#accueil" class="p-3 rounded-xl glass-card text-gray-400 hover:text-white hover:bg-gray-800 transition-all" title="Haut de page">
+                <i class="fa-solid fa-arrow-up"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Project Modal Preview -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-card max-w-3xl w-full rounded-3xl overflow-hidden border border-gray-800 shadow-2xl relative max-h-[90vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-800 flex items-center justify-between">
+                <div>
+                    <h3 id="modal-title" class="text-2xl font-bold text-white"></h3>
+                    <p id="modal-subtitle" class="text-xs text-brand-400 font-medium mt-1"></p>
+                </div>
+                <button onclick="closeModal()" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-6">
+                <div class="aspect-video rounded-2xl overflow-hidden bg-gray-900 border border-gray-800">
+                    <img id="modal-img" src="" alt="Aperçu Projet" class="w-full h-full object-cover">
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-2">Description du projet</h4>
+                    <p id="modal-desc" class="text-gray-300 text-sm leading-relaxed"></p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-2">Fonctionnalités clés</h4>
+                    <ul id="modal-features" class="list-disc list-inside text-sm text-gray-400 space-y-1"></ul>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-6 border-t border-gray-800 bg-gray-950/50 flex justify-end">
+                <a href="#contact" onclick="closeModal()" class="px-6 py-2.5 rounded-xl bg-brand-600 text-white font-semibold text-sm hover:bg-brand-500 transition-colors">
+                    Commander un site similaire
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Portfolio Filtering
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            filterBtns.forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.classList.add('bg-brand-600', 'text-white');
+                    btn.classList.remove('text-gray-400');
+                } else {
+                    btn.classList.remove('bg-brand-600', 'text-white');
+                    btn.classList.add('text-gray-400');
+                }
+            });
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Modals Data & Functions
+        const projectsData = {
+            tonton: {
+                title: "Chez Tonton - Fast Food Mainvilliers",
+                subtitle: "Site web de Restauration rapide & Menu Interactif",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
+                desc: "Création complète d'un site web à l'esthétique forte et chaleureuse pour le fast-food 'Chez Tonton' situé à Mainvilliers. Le site permet aux clients de parcourir les différentes catégories du menu (sandwichs généreux, assiettes gourmandes, box poulet) avec une clarté optimale.",
+                features: [
+                    "Design Thème Sombre & Rouge dynamique optimisé",
+                    "Menu interactif avec catégories claires",
+                    "Support multilingue (Français, Anglais, Arabe)",
+                    "Intégration directe Google Maps pour géolocalisation",
+                    "Boutons d'action rapide vers la commande en ligne"
+                ]
+            },
+            gelato: {
+                title: "Signature Gelato - Glacerie Artisanale",
+                subtitle: "Site Vitrine Glacerie à Tétouan",
+                img: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=80",
+                desc: "Conception d'une plateforme vitrine d'une grande finesse pour 'Signature Gelato'. Ce site met en avant l'artisanat des glaces préparées avec soin sur l'avenue des FAR à Tétouan.",
+                features: [
+                    "Design épuré et sophistiqué avec palette crème / pastel",
+                    "Galerie photo haute résolution des parfums",
+                    "Bouton d'itinéraire instantané vers Google Maps",
+                    "Menu fluide adapté pour la lecture sur smartphone"
+                ]
+            }
+        };
+
+        function openModal(key) {
+            const data = projectsData[key];
+            if (!data) return;
+
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-subtitle').textContent = data.subtitle;
+            document.getElementById('modal-img').src = data.img;
+            document.getElementById('modal-desc').textContent = data.desc;
+
+            const featuresList = document.getElementById('modal-features');
+            featuresList.innerHTML = '';
+            data.features.forEach(feat => {
+                const li = document.createElement('li');
+                li.textContent = feat;
+                featuresList.appendChild(li);
+            });
+
+            document.getElementById('project-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('project-modal').classList.add('hidden');
+        }
+
+        // Contact Form Submission Simulation
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('form-toast').classList.remove('hidden');
+            this.reset();
+        });
+
+        function closeToast() {
+            document.getElementById('form-toast').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
